@@ -15,6 +15,7 @@ import imageio
 import torchvision.transforms as transforms
 from .resize_right import resize
 import random
+import cv2
 
 #----------------------------------------------------------------------------
 # Vector operations
@@ -403,9 +404,9 @@ def init_glfw():
 def save_image(fn, x : np.ndarray):
     try:
         if os.path.splitext(fn)[1] == ".png":
-            imageio.imwrite(fn, np.clip(np.rint(x * 255.0), 0, 255).astype(np.uint8), compress_level=3) # Low compression for faster saving
+            cv2.imwrite(fn, np.clip(np.rint(x * 255.0), 0, 255).astype(np.uint8), [cv2.IMWRITE_PNG_COMPRESSION, 3]) # Low compression for faster saving
         else:
-            imageio.imwrite(fn, np.clip(np.rint(x * 255.0), 0, 255).astype(np.uint8))
+            cv2.imwrite(fn, np.clip(np.rint(x * 255.0), 0, 255).astype(np.uint8))
     except:
         print("WARNING: FAILED to save image %s" % fn)
 
